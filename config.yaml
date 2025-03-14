@@ -1,0 +1,5 @@
+manager_port : 3000
+manager_host : localhost
+worker_max_count : 15
+worker_agent_procent_max_count : 10
+worker_ports : "7000-9000"
