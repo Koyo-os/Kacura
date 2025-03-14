@@ -11,9 +11,21 @@ import (
 type Config struct{
 	Port uint `yaml:"manager_port"`
 	Host string `yaml:"manager_port"`
-	WorkerMaxCount int `yaml:"worker_max_count"`
-	WorkerMaxProcent int `yaml:"worker_agent_procent_max_count"`
-	WorkerPorts string `yaml:"worker_ports"`
+	Worker WorkerConfig `yaml:"worker"`
+	Smpt SmptConfig `yaml:"smpt"`
+}
+
+type SmptConfig struct{
+	Host string `yaml:"host"`
+	Port int `yaml:"port"`
+	Username string `yaml:"username"`
+	Password string `yaml:"password"`
+}
+
+type WorkerConfig struct{
+	MaxCount int `yaml:"max"`
+	MaxProcentFromReq int `yaml:"agent_procent"`
+	Ports string `yaml:"ports"`
 }
 
 func Init() (*Config, error) {

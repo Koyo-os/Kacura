@@ -1,5 +1,14 @@
 manager_port : 3000
 manager_host : localhost
-worker_max_count : 15
-worker_agent_procent_max_count : 10
-worker_ports : "7000-9000"
+
+worker:
+  max: 15
+  procent_max : 25
+  procent_min : 10
+  ports : "7000-9000"
+
+smpt:
+  host: smtp.gmail.com
+  port: 587
+  username : example@mail.ru
+  password : 123456
