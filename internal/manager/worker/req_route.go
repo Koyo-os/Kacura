@@ -4,7 +4,7 @@ import "github.com/koyo-os/kacura/internal/manager/worker/agent"
 
 func (w *Worker) Route() {
 	for {
-		r := <- w.reqChan
+		r := <- w.ReqChan
 		agent.RunAgent(
 			&agent.Agent{
 				Logger: w.logger,

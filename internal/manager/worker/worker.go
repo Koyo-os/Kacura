@@ -13,7 +13,7 @@ type Worker struct{
 	client *mail.Client
 	logger *logger.Logger
 	wg *sync.WaitGroup
-	reqChan chan *http.Request
+	ReqChan chan *http.Request
 	counterInc chan struct{}
 	counterDec chan struct{}
 	mux *sync.Mutex
@@ -50,7 +50,7 @@ func Init(cfg *config.Config) (*Worker,error) {
 		client: client,
 		logger: logger,
 		wg: &wg,
-		reqChan: chreq,
+		ReqChan: chreq,
 		counterInc: counter,
 		counterDec: counterDec,
 		mux: &mux,
@@ -60,17 +60,15 @@ func Init(cfg *config.Config) (*Worker,error) {
 func (w *Worker) CounterInc() {
 	for {
 		w.mux.Lock()
-		defer w.mux.Unlock()
 
 		select{
 		case <- w.counterInc:
 			COUNTER++
+			w.mux.Unlock()
 		case <- w.counterDec:
 			COUNTER--
+			w.mux.Unlock()
 		}
 	}
 }
 
-func (w *Worker) Start() error {
-
-}

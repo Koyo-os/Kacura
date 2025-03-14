@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/koyo-os/kacura/internal/manager/worker"
@@ -8,10 +9,18 @@ import (
 )
 
 type WorkerHandler struct{
-	worker *worker.Worker
 	logger *logger.Logger
+	worker *worker.Worker
 }
 
-func (worker *WorkerHandler) MainHandler(w http.ResponseWriter, r *http.Request) {
-	
+func (work *WorkerHandler) MainHandler(w http.ResponseWriter, r *http.Request) {
+	work.worker.ReqChan <- r
+}
+
+func (work *WorkerHandler) Counter(w http.ResponseWriter, r *http.Request) {
+	_, err := fmt.Fprint(w, worker.COUNTER)
+	if err != nil{
+		work.logger.Errorf("cant print counter: %v", err)
+		return
+	}
 }
