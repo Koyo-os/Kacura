@@ -62,6 +62,10 @@ func Init(cfg *config.Config) (*Worker,error) {
 	},nil
 }
 
+func (w *Worker) GetCount() uint {
+	return w.counter
+}
+
 func (w *Worker) Run() error {
 	go w.CounterInc()
 	
@@ -88,10 +92,10 @@ func (w *Worker) CounterInc() {
 
 		select{
 		case <- w.counterInc:
-			COUNTER++
+			w.counter++
 			w.mux.Unlock()
 		case <- w.counterDec:
-			COUNTER--
+			w.counter--
 			w.mux.Unlock()
 		}
 	}
